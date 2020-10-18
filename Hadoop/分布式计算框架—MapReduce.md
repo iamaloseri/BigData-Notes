@@ -14,7 +14,7 @@ MapReduce 作业通过将输入的数据集拆分为独立的块，这些块由 
 
 这里以词频统计为例进行说明，MapReduce 处理的流程如下：
 
-![2020-10-18-hoGFMy](https://image.ldbmcs.com/2020-10-18-hoGFMy.jpg)
+![2020-10-18-S0rArM](https://image.ldbmcs.com/2020-10-18-S0rArM.jpg)
 
 1. **input** : 读取文本文件；
 
