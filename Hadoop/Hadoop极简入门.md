@@ -1,3 +1,4 @@
+> 转载：[Hadoop极简入门](https://github.com/wangzhiwubigdata/God-Of-BigData/blob/master/Hadoop/Hadoop%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8.md)
 
 其实Hadoop诞生至今已经十多年了，网络上也充斥着关于Hadoop相关知识的的海量资源。但是，有时还是会使刚刚接触大数据领域的童鞋分不清hadoop、hdfs、Yarn和MapReduce等等技术词汇。
 

@@ -1,3 +1,5 @@
+> 转载：[HDFS常用Shell命令](https://github.com/heibaiying/BigData-Notes/blob/master/notes/HDFS%E5%B8%B8%E7%94%A8Shell%E5%91%BD%E4%BB%A4.md)
+
 **1. 显示当前目录结构**
 
 ```shell

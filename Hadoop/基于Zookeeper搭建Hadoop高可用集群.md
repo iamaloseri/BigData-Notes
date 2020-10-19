@@ -1,3 +1,4 @@
+> 转载：[基于ZooKeeper搭建Hadoop高可用集群](https://github.com/heibaiying/BigData-Notes/blob/master/notes/installation/%E5%9F%BA%E4%BA%8EZookeeper%E6%90%AD%E5%BB%BAHadoop%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.md)
 
 ## 1. 高可用简介
 

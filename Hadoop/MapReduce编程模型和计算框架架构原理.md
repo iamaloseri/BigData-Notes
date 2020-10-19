@@ -1,10 +1,12 @@
-Hadoop解决大规模数据分布式计算的方案是MapReduce。MapReduce既是一个编程模型，又是一个计算框架。也就是说，开发人员必须基于MapReduce编程模型进行编程开发，然后将程序通过MapReduce计算框架分发到Hadoop集群中运行。我们先看一下作为编程模型的MapReduce。
+> 转载：[MapReduce编程模型和计算框架架构原理](https://github.com/wangzhiwubigdata/God-Of-BigData/blob/master/Hadoop/MapReduce%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B%E5%92%8C%E8%AE%A1%E7%AE%97%E6%A1%86%E6%9E%B6%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86.md)
+
+**Hadoop解决大规模数据分布式计算的方案是MapReduce**。MapReduce既是一个编程模型，又是一个计算框架。也就是说，开发人员必须基于MapReduce编程模型进行编程开发，然后将程序通过MapReduce计算框架分发到Hadoop集群中运行。我们先看一下作为编程模型的MapReduce。
 
 ## 1. MapReduce编程模型
 
 MapReduce是一种非常简单又非常强大的编程模型。
 
-简单在于其编程模型只包含map和reduce两个过程，map的主要输入是一对<key , value>值，经过map计算后输出一对<key , value>值；然后将相同key合并，形成<key , value集合>；再将这个<key , value集合>输入reduce，经过计算输出零个或多个<key , value>对。
+简单在于其编程模型只包含map和reduce两个过程，**map的主要输入是一对<key , value>值，经过map计算后输出一对<key , value>值；然后将相同key合并，形成<key , value集合>；再将这个<key , value集合>输入reduce，经过计算输出零个或多个<key , value>对。**
 
 但是MapReduce同时又是非常强大的，不管是关系代数运算（SQL计算），还是矩阵运算（图计算），大数据领域几乎所有的计算需求都可以通过MapReduce编程来实现。
 
@@ -21,37 +23,37 @@ WordCount的MapReduce程序如下。
 ```java
 public class WordCount {
 
-public static class TokenizerMapper
-extends Mapper<Object, Text, Text, IntWritable>{
+    public static class TokenizerMapper
+            extends Mapper<Object, Text, Text, IntWritable>{
 
-private final static IntWritable one = new IntWritable(1);
-private Text word = new Text();
+        private final static IntWritable one = new IntWritable(1);
+        private Text word = new Text();
 
-public void map(Object key, Text value, Context context
-) throws IOException, InterruptedException {
-StringTokenizer itr = new StringTokenizer(value.toString());
-while (itr.hasMoreTokens()) {
-word.set(itr.nextToken());
-context.write(word, one);
-}
-}
-}
+        public void map(Object key, Text value, Context context
+        ) throws IOException, InterruptedException {
+            StringTokenizer itr = new StringTokenizer(value.toString());
+            while (itr.hasMoreTokens()) {
+                word.set(itr.nextToken());
+                context.write(word, one);
+            }
+        }
+    }
 
-public static class IntSumReducer
-extends Reducer<Text,IntWritable,Text,IntWritable> {
-private IntWritable result = new IntWritable();
+    public static class IntSumReducer
+            extends Reducer<Text,IntWritable,Text,IntWritable> {
+        private IntWritable result = new IntWritable();
 
-public void reduce(Text key, Iterable<IntWritable> values,
-Context context
-) throws IOException, InterruptedException {
-int sum = 0;
-for (IntWritable val : values) {
-sum += val.get();
-}
-result.set(sum);
-context.write(key, result);
-}
-}
+        public void reduce(Text key, Iterable<IntWritable> values,
+                           Context context
+        ) throws IOException, InterruptedException {
+            int sum = 0;
+            for (IntWritable val : values) {
+                sum += val.get();
+            }
+            result.set(sum);
+            context.write(key, result);
+        }
+    }
 }
 ```
 其核心是一个map函数，一个reduce函数。

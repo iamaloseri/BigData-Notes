@@ -1,3 +1,4 @@
+> 转载：[HDFS Java API 的使用](https://github.com/heibaiying/BigData-Notes/blob/master/notes/HDFS-Java-API.md)
 
 ## 1. 简介
 

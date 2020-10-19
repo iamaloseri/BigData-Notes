@@ -1,3 +1,5 @@
+> 转载：[Hadoop单机环境搭建](https://github.com/heibaiying/BigData-Notes/blob/master/notes/installation/Hadoop%E5%8D%95%E6%9C%BA%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.md)
+
 ## 1. 前置条件
 
 Hadoop 的运行依赖 JDK，需要预先安装，安装步骤见：

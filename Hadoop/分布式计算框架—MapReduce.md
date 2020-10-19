@@ -42,11 +42,11 @@ MapReduce 编程模型中 `splitting` 和 `shuffing` 操作都是由框架实现
 
 但并非所有场景都适合使用 `combiner`，使用它的原则是 `combiner` 的输出不会影响到 `reduce` 计算的最终输入，例如：求总数，最大值，最小值时都可以使用 `combiner`，但是做平均值计算则不能使用 `combiner`。
 
-不使用 combiner 的情况：
+**不使用 combiner 的情况：**
 
 ![2020-10-18-5KcAfF](https://image.ldbmcs.com/2020-10-18-5KcAfF.jpg)
 
-使用 combiner 的情况：
+**使用 combiner 的情况：**
 
 ![2020-10-18-GVssSf](https://image.ldbmcs.com/2020-10-18-GVssSf.jpg)
 
@@ -289,7 +289,7 @@ job.setCombinerClass(WordCountReducer.class);
 
 这里假设有个需求：将不同单词的统计结果输出到不同文件。这种需求实际上比较常见，比如统计产品的销量时，需要将结果按照产品种类进行拆分。要实现这个功能，就需要用到自定义 `Partitioner`。
 
-这里先介绍下 MapReduce 默认的分类规则：在构建 job 时候，如果不指定，默认的使用的是 `HashPartitioner`：对 key 值进行哈希散列并对 `numReduceTasks` 取余。其实现如下：
+这里先介绍下 MapReduce 默认的分类规则：在构建 job 时候，如果不指定，默认的使用的是 `HashPartitioner`：**对 key 值进行哈希散列并对 `numReduceTasks` 取余**。其实现如下：
 
 ```java
 public class HashPartitioner<K, V> extends Partitioner<K, V> {
