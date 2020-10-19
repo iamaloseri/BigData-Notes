@@ -20,10 +20,21 @@
 ## 2. Hive
 
 1. [Hive 简介及核心概念]()
+
 2. [Linux 环境下 Hive 的安装部署]()
+
 3. [Hive CLI 和 Beeline 命令行的基本使用]()
+
 4. [Hive 常用 DDL 操作]()
+
 5. [Hive 分区表和分桶表]()
+
 6. [Hive 视图和索引]()
+
 7. [Hive 常用 DML 操作]()
+
 8. [Hive 数据查询详解]()
+
+9. [Hive实现WordCount详解]()
+
+10. [Hive SQL的编译过程]()
