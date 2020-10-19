@@ -2,7 +2,7 @@
 
 ## 1. 简介
 
-Hive 是一个构建在 Hadoop 之上的数据仓库，它可以将结构化的数据文件映射成表，并提供类 SQL 查询功能，用于查询的 SQL 语句会被转化为 MapReduce 作业，然后提交到 Hadoop 上运行。
+**Hive 是一个构建在 Hadoop 之上的数据仓库，它可以将结构化的数据文件映射成表，并提供类 SQL 查询功能，用于查询的 SQL 语句会被转化为 MapReduce 作业，然后提交到 Hadoop 上运行。**
 
 **特点**：
 
@@ -25,7 +25,7 @@ Hive 是一个构建在 Hadoop 之上的数据仓库，它可以将结构化的�
 
 ### 2.2 Metastore
 
-在 Hive 中，表名、表结构、字段名、字段类型、表的分隔符等统一被称为元数据。所有的元数据默认存储在 Hive 内置的 derby 数据库中，但由于 derby 只能有一个实例，也就是说不能有多个命令行客户端同时访问，所以在实际生产环境中，通常使用 MySQL 代替 derby。
+在 Hive 中，表名、表结构、字段名、字段类型、表的分隔符等统一被称为**元数据**。所有的元数据默认存储在 Hive 内置的 `derby` 数据库中，但由于 derby 只能有一个实例，也就是说不能有多个命令行客户端同时访问，所以**在实际生产环境中，通常使用 MySQL 代替 derby。**
 
 Hive 进行的是统一的元数据管理，就是说你在 Hive 上创建了一张表，然后在 presto／impala／sparksql 中都是可以直接使用的，它们会从 Metastore 中获取统一的元数据信息，同样的你在 presto／impala／sparksql 中创建一张表，在 Hive 中也可以直接使用。
 
@@ -33,12 +33,12 @@ Hive 进行的是统一的元数据管理，就是说你在 Hive 上创建了一
 
 Hive 在执行一条 HQL 的时候，会经过以下步骤：
 
-1. 语法解析：Antlr 定义 SQL 的语法规则，完成 SQL 词法，语法解析，将 SQL 转化为抽象 语法树 AST Tree；
-2. 语义解析：遍历 AST Tree，抽象出查询的基本组成单元 QueryBlock；
-3. 生成逻辑执行计划：遍历 QueryBlock，翻译为执行操作树 OperatorTree；
-4. 优化逻辑执行计划：逻辑层优化器进行 OperatorTree 变换，合并不必要的 ReduceSinkOperator，减少 shuffle 数据量；
-5. 生成物理执行计划：遍历 OperatorTree，翻译为 MapReduce 任务；
-6. 优化物理执行计划：物理层优化器进行 MapReduce 任务的变换，生成最终的执行计划。
+1. **语法解析**：Antlr 定义 SQL 的语法规则，完成 SQL 词法，语法解析，将 SQL 转化为抽象语法树 AST Tree；
+2. **语义解析**：遍历 AST Tree，抽象出查询的基本组成单元 QueryBlock；
+3. **生成逻辑执行计划**：遍历 QueryBlock，翻译为执行操作树 OperatorTree；
+4. **优化逻辑执行计划**：逻辑层优化器进行 OperatorTree 变换，合并不必要的 ReduceSinkOperator，减少 shuffle 数据量；
+5. **生成物理执行计划**：遍历 OperatorTree，翻译为 MapReduce 任务；
+6. **优化物理执行计划**：物理层优化器进行 MapReduce 任务的变换，生成最终的执行计划。
 
 > 关于 Hive SQL 的详细执行流程可以参考美团技术团队的文章：[Hive SQL 的编译过程](https://tech.meituan.com/2014/02/12/hive-sql-to-mapreduce.html)
 
@@ -65,7 +65,7 @@ Hive 表中的列支持以下基本数据类型：
 
 ### 3.2 隐式转换
 
-Hive 中基本数据类型遵循以下的层次结构，按照这个层次结构，子类型到祖先类型允许隐式转换。例如 INT 类型的数据允许隐式转换为 BIGINT 类型。额外注意的是：按照类型层次结构允许将 STRING 类型隐式转换为 DOUBLE 类型。
+Hive 中基本数据类型遵循以下的层次结构，按照这个层次结构，**子类型到祖先类型允许隐式转换**。例如 INT 类型的数据允许隐式转换为 BIGINT 类型。额外注意的是：**按照类型层次结构允许将 STRING 类型隐式转换为 DOUBLE 类型**。
 
 ![2020-10-19-U8bJhz](https://image.ldbmcs.com/2020-10-19-U8bJhz.jpg)
 
@@ -93,7 +93,7 @@ CREATE TABLE students(
 
 ## 4. 内容格式
 
-当数据存储在文本文件中，必须按照一定格式区别行和列，如使用逗号作为分隔符的 CSV 文件 (Comma-Separated Values) 或者使用制表符作为分隔值的 TSV 文件 (Tab-Separated Values)。但此时也存在一个缺点，就是正常的文件内容中也可能出现逗号或者制表符。
+**当数据存储在文本文件中，必须按照一定格式区别行和列**，如使用逗号作为分隔符的 CSV 文件 (Comma-Separated Values) 或者使用制表符作为分隔值的 TSV 文件 (Tab-Separated Values)。但此时也存在一个缺点，就是正常的文件内容中也可能出现逗号或者制表符。
 
 所以 Hive 默认使用了几个平时很少出现的字符，这些字符一般不会作为内容出现在文件中。Hive 默认的行和列分隔符如下表所示。
 
@@ -119,14 +119,14 @@ CREATE TABLE page_view(viewTime INT, userid BIGINT)
 
 ### 5.1 支持的存储格式
 
-Hive 会在 HDFS 为每个数据库上创建一个目录，数据库中的表是该目录的子目录，表中的数据会以文件的形式存储在对应的表目录下。Hive 支持以下几种文件存储格式：
+**Hive 会在 HDFS 为每个数据库上创建一个目录**，数据库中的表是该目录的子目录，表中的数据会以文件的形式存储在对应的表目录下。Hive 支持以下几种文件存储格式：
 
 | 格式             | 说明                                                         |
 | ---------------- | ------------------------------------------------------------ |
-| **TextFile**     | 存储为纯文本文件。 这是 Hive 默认的文件存储格式。这种存储方式数据不做压缩，磁盘开销大，数据解析开销大。 |
+| **TextFile**     | 存储为纯文本文件。 这是 **Hive 默认的文件存储格式**。这种存储方式数据不做压缩，磁盘开销大，数据解析开销大。 |
 | **SequenceFile** | SequenceFile 是 Hadoop API 提供的一种二进制文件，它将数据以<key,value>的形式序列化到文件中。这种二进制文件内部使用 Hadoop 的标准的 Writable 接口实现序列化和反序列化。它与 Hadoop API 中的 MapFile 是互相兼容的。Hive 中的 SequenceFile 继承自 Hadoop API 的 SequenceFile，不过它的 key 为空，使用 value 存放实际的值，这样是为了避免 MR 在运行 map 阶段进行额外的排序操作。 |
 | **RCFile**       | RCFile 文件格式是 FaceBook 开源的一种 Hive 的文件存储格式，首先将表分为几个行组，对每个行组内的数据按列存储，每一列的数据都是分开存储。 |
-| **ORC Files**    | ORC 是在一定程度上扩展了 RCFile，是对 RCFile 的优化。            |
+| **ORC Files**    | ORC 是在一定程度上扩展了 RCFile，是对 RCFile 的优化。        |
 | **Avro Files**   | Avro 是一个数据序列化系统，设计用于支持大批量数据交换的应用。它的主要特点有：支持二进制序列化方式，可以便捷，快速地处理大量数据；动态语言友好，Avro 提供的机制使动态语言可以方便地处理 Avro 数据。 |
 | **Parquet**      | Parquet 是基于 Dremel 的数据模型和算法实现的，面向分析型业务的列式存储格式。它通过按列进行高效压缩和特殊的编码技术，从而在降低存储空间的同时提高了 IO 效率。 |
 
