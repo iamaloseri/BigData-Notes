@@ -115,7 +115,43 @@ HDFS 具有良好的跨平台移植性，这使得其他大数据计算框架都
 
 ![2020-10-18-vNOTiR](https://image.ldbmcs.com/2020-10-18-vNOTiR.jpg)
 
-## 5. 参考资料
+## 5. HDFS常见操作
+
+```bash
+#cat 数据
+hadoop fs -cat /usr/hive/warehouse/hivewithhdfs.db/record/data.txt
+#修改目录或者文件权限
+hadoop fs -chmod -R 777 /usr
+#改变文件或者目录 owner
+hadoop fs -chown -R root:root /usr
+#创建文件夹
+hadoop fs -mkdir <paths>
+#本地文件发送到 HDFS 上
+hadoop fs -put <localsrc> ... <dst>
+#拷贝本地文件到 HDFS 上
+hadoop fs -copyFromLocal <localsrc> URI
+#查看文件或者目录的存储使用量
+hadoop fs -du URI [URI …]
+#删除文件
+hadoop fs -rm URI [URI …]
+#设置目录或者文件的拷贝数
+hadoop fs–setrep [-R] [-w] REP PATH [PATH …]
+#检查集群文件坏块
+hadoop fsck <path> [-move | -delete | -openforwrite] [-files [-blocks [-locations | -racks]]]
+```
+
+另外，此外如果您的集群是高 HA 集群（双 namenode），您可以通过如下命名查看哪个 namenode 是 active 的。
+
+```bash
+#nn1 是 namenode 的 ID，一般为 nn1 和 nn2
+hdfs haadmin -getServiceState nn1
+#查看当前集群报告
+hdfs dfsadmin -report
+#namenode 离开安全模式
+hdfs dfsadmin -safemode leave
+```
+
+## 6. 参考资料
 
 1. [Apache Hadoop 2.9.2 > HDFS Architecture](http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html)
 2. Tom White . hadoop 权威指南 [M] . 清华大学出版社 . 2017.

@@ -177,11 +177,11 @@ check your cluster UI to ensure that workers are registered and have sufficient 
 | `SPARK_DAEMON_JAVA_OPTS`         | spark master 和 worker 守护进程的 JVM 选项，格式是 "-Dx=y"（默认：none） |
 | `SPARK_PUBLIC_DNS`               | spark master 和 worker 的公开 DNS 名称。（默认：none）       |
 
-## 3. Spark on Yarn模式
+## 4. Spark on Yarn模式
 
 Spark 支持将作业提交到 Yarn 上运行，此时不需要启动 Master 节点，也不需要启动 Worker 节点。
 
-### 3.1 配置
+### 4.1 配置
 
 在 `spark-env.sh` 中配置 hadoop 的配置目录的位置，可以使用 `YARN_CONF_DIR` 或 `HADOOP_CONF_DIR` 进行指定：
 
@@ -191,7 +191,7 @@ YARN_CONF_DIR=/usr/app/hadoop-2.6.0-cdh5.15.2/etc/hadoop
 JAVA_HOME=/usr/java/jdk1.8.0_201
 ```
 
-### 3.2 启动
+### 4.2 启动
 
 必须要保证 Hadoop 已经启动，这里包括 YARN 和 HDFS 都需要启动，因为在计算过程中 Spark 会使用 HDFS 存储临时文件，如果 HDFS 没有启动，则会抛出异常。
 
@@ -200,7 +200,7 @@ JAVA_HOME=/usr/java/jdk1.8.0_201
 # start-dfs.sh
 ```
 
-### 3.3 提交应用
+### 4.3 提交应用
 
 ```shell
 #  以client模式提交到yarn集群 
