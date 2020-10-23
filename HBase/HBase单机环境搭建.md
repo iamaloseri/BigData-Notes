@@ -1,3 +1,5 @@
+> 转载：[HBase单机环境搭建](https://github.com/heibaiying/BigData-Notes/blob/master/notes/installation/HBase%E5%8D%95%E6%9C%BA%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.md)
+
 ## 1. 安装前置条件说明
 
 ### 1.1 JDK版本说明
@@ -96,7 +98,7 @@ export JAVA_HOME=/usr/java/jdk1.8.0_201
 
 验证方式二 ：访问 HBaseWeb UI 页面，默认端口为 `16010` 。
 
-<div align="center"> <img src="../../pictures/hbase-web-ui.png"/> </div>
+![2020-10-23-7733iX](https://image.ldbmcs.com/2020-10-23-7733iX.jpg)
 
 
 ## 3. 伪集群模式安装（Pseudo-Distributed）
@@ -142,8 +144,6 @@ export PATH=$HBASE_HOME/bin:$PATH
 ```
 
 
-
-
 ### 3.5 进行HBase相关配置
 
 1.修改安装目录下的 `conf/hbase-env.sh`,指定 JDK 的安装路径：
@@ -181,15 +181,11 @@ export JAVA_HOME=/usr/java/jdk1.8.0_201
 hadoop001
 ```
 
-
-
 ### 3.6 启动
 
 ```shell
 # bin/start-hbase.sh
 ```
-
-
 
 ### 3.7 验证启动是否成功
 
@@ -212,4 +208,4 @@ hadoop001
 
 验证方式二 ：访问 HBase Web UI 界面，需要注意的是 1.2 版本的 HBase 的访问端口为 `60010`
 
-<div align="center"> <img src="../../pictures/hbase-60010.png"/> </div>
+![2020-10-23-1XvSNT](https://image.ldbmcs.com/2020-10-23-1XvSNT.jpg)

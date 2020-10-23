@@ -1,30 +1,12 @@
-# HBase集群环境配置
+> [HBase集群环境搭建](https://github.com/heibaiying/BigData-Notes/blob/master/notes/installation/HBase%E9%9B%86%E7%BE%A4%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.md)
 
-<nav>
-<a href="#一集群规划">一、集群规划</a><br/>
-<a href="#二前置条件">二、前置条件</a><br/>
-<a href="#三集群搭建">三、集群搭建</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-下载并解压">3.1 下载并解压</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-配置环境变量">3.2 配置环境变量</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-集群配置">3.3 集群配置</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-HDFS客户端配置">3.4 HDFS客户端配置</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#35-安装包分发">3.5 安装包分发</a><br/>
-<a href="#四启动集群">四、启动集群</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-启动ZooKeeper集群">4.1 启动ZooKeeper集群</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-启动Hadoop集群">4.2 启动Hadoop集群</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-启动HBase集群">4.3 启动HBase集群</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#45-查看服务">4.5 查看服务</a><br/>
-</nav>
-
-
-
-## 一、集群规划
+## 1. 集群规划
 
 这里搭建一个 3 节点的 HBase 集群，其中三台主机上均为 `Regin Server`。同时为了保证高可用，除了在 hadoop001 上部署主 `Master` 服务外，还在 hadoop002 上部署备用的 `Master` 服务。Master 服务由 Zookeeper 集群进行协调管理，如果主 `Master` 不可用，则备用 `Master` 会成为新的主 `Master`。
 
-<div align="center"> <img  src="../../pictures/hbase集群规划.png"/> </div>
+![2020-10-23-FlQ9Dh](https://image.ldbmcs.com/2020-10-23-FlQ9Dh.jpg)
 
-## 二、前置条件
+## 2. 前置条件
 
 HBase 的运行需要依赖 Hadoop 和 JDK(`HBase 2.0+` 对应 `JDK 1.8+`) 。同时为了保证高可用，这里我们不采用 HBase 内置的 Zookeeper 服务，而采用外置的 Zookeeper 集群。相关搭建步骤可以参阅：
 
@@ -32,9 +14,7 @@ HBase 的运行需要依赖 Hadoop 和 JDK(`HBase 2.0+` 对应 `JDK 1.8+`) 。�
 - [Zookeeper 单机环境和集群环境搭建](https://github.com/heibaiying/BigData-Notes/blob/master/notes/installation/Zookeeper单机环境和集群环境搭建.md)
 - [Hadoop 集群环境搭建](https://github.com/heibaiying/BigData-Notes/blob/master/notes/installation/Hadoop集群环境搭建.md)
 
-
-
-## 三、集群搭建
+## 3. 集群搭建
 
 ### 3.1 下载并解压
 
@@ -67,7 +47,7 @@ export PATH=$HBASE_HOME/bin:$PATH
 
 进入 `${HBASE_HOME}/conf` 目录下，修改配置：
 
-#### 1. hbase-env.sh 
+#### 3.3.1 hbase-env.sh 
 
 ```shell
 # 配置JDK安装位置
@@ -76,7 +56,7 @@ export JAVA_HOME=/usr/java/jdk1.8.0_201
 export HBASE_MANAGES_ZK=false
 ```
 
-#### 2. hbase-site.xml
+#### 3.3.2 hbase-site.xml
 
 ```xml
 <configuration>
@@ -98,7 +78,7 @@ export HBASE_MANAGES_ZK=false
 </configuration>
 ```
 
-#### 3. regionservers
+#### 3.3.3 regionservers
 
 ```
 hadoop001
@@ -106,7 +86,7 @@ hadoop002
 hadoop003
 ```
 
-#### 4. backup-masters
+#### 3.3.4 backup-masters
 
 ```
 hadoop002
@@ -144,8 +124,6 @@ ln -s   /usr/app/hadoop-2.6.0-cdh5.15.2/etc/hadoop/hdfs-site.xml
 
 **第三种** ：如果你只有少量更改，那么直接配置到 `hbase-site.xml` 中即可。
 
-
-
 ### 3.5 安装包分发
 
 将 HBase 的安装包分发到其他服务器，分发后建议在这两台服务器上也配置一下 HBase 的环境变量。
@@ -155,9 +133,7 @@ scp -r /usr/app/hbase-1.2.0-cdh5.15.2/  hadoop002:usr/app/
 scp -r /usr/app/hbase-1.2.0-cdh5.15.2/  hadoop003:usr/app/
 ```
 
-
-
-## 四、启动集群
+## 4. 启动集群
 
 ### 4.1 启动ZooKeeper集群
 
@@ -184,17 +160,12 @@ start-yarn.sh
 start-hbase.sh
 ```
 
-
-
 ### 4.5 查看服务
 
 访问 HBase 的 Web-UI 界面，这里我安装的 HBase 版本为 1.2，访问端口为 `60010`，如果你安装的是 2.0 以上的版本，则访问端口号为 `16010`。可以看到 `Master` 在 hadoop001 上，三个 `Regin Servers` 分别在 hadoop001，hadoop002，和 hadoop003 上，并且还有一个 `Backup Matser` 服务在 hadoop002 上。
 
-<div align="center"> <img  src="../../pictures/hbase-集群搭建1.png"/> </div>
-<br/>
+![2020-10-23-fePDng](https://image.ldbmcs.com/2020-10-23-fePDng.jpg)
 
 hadoop002 上的 HBase 出于备用状态：
 
-<br/>
-
-<div align="center"> <img  src="../../pictures/hbase-集群搭建2.png"/> </div>
+![2020-10-23-4ZgCYF](https://image.ldbmcs.com/2020-10-23-4ZgCYF.jpg)
