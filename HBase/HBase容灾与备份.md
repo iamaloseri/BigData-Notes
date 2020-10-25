@@ -3,7 +3,7 @@
 
 ## 1. 前言
 
-本文主要介绍 Hbase 常用的三种简单的容灾备份方案，即**CopyTable**、**Export**/**Import**、**Snapshot**。分别介绍如下：
+本文主要介绍 Hbase 常用的三种简单的容灾备份方案，即**CopyTable**、**Export/Import**、**Snapshot**。分别介绍如下：
 
 ## 2. CopyTable
 
